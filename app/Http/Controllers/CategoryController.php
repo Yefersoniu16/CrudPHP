@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Http\Request\CreateCategoryRequest;
+
 
 
 
@@ -15,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('categories.index');
+        $categories = Category::all();
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -32,7 +34,7 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         Category::create($request->validated());
-        return redirect()->route('categories.index')->with('success', 'category created successfully');
+        return redirect()->route('categories.index')->with('success', 'Category created successfully');
     }
 
     /**
